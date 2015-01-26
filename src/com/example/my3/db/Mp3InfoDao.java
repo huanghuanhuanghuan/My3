@@ -11,6 +11,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 public class Mp3InfoDao {
 	private MyDataBaseOpenHelper hepler;
@@ -28,7 +29,7 @@ public class Mp3InfoDao {
 		if (db.isOpen()) {
 			MediaInformation m = new MediaInformation();
 			List<Mp3Info> mp3Infos = m.getMp3Infos(context);
-			Log.i("Mp3InfoDao", "mp3Infos.size" + mp3Infos.size());
+			Toast.makeText(context,"mp3Infos.size" + mp3Infos.size(),10000).show();
 			for (int i = 0; i < mp3Infos.size(); i++) {
 				Mp3Info mp3Info = mp3Infos.get(i);
 				insert(context, mp3Info);

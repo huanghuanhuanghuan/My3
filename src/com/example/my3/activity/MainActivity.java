@@ -4,9 +4,11 @@ import java.util.List;
 
 import com.example.my3.R;
 import com.example.my3.db.Mp3InfoDao;
+import com.example.my3.dialog.MyProgressDialog;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,12 +30,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		// 设置无标题
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
-		initView();
-		
-		Mp3InfoDao dao = new Mp3InfoDao(this);
-		dao.insertall(this);
-		List<String> list = dao.quray("file");
-		Log.i("MainActivity", list.get(0).toString());
+		initView();//初始化界面
 	}
 
 	void initView() {
