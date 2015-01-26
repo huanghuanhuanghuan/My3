@@ -1,10 +1,14 @@
 package com.example.my3.activity;
 
+import java.util.List;
+
 import com.example.my3.R;
+import com.example.my3.db.Mp3InfoDao;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -25,6 +29,11 @@ public class MainActivity extends Activity implements OnClickListener {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		initView();
+		
+		Mp3InfoDao dao = new Mp3InfoDao(this);
+		dao.insertall(this);
+		List<String> list = dao.quray("file");
+		Log.i("MainActivity", list.get(0).toString());
 	}
 
 	void initView() {
