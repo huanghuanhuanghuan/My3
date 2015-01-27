@@ -2,6 +2,7 @@ package com.example.my3.db;
 
 import java.security.acl.LastOwnerException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.example.my3.demo.Mp3Info;
@@ -29,7 +30,8 @@ public class Mp3InfoDao {
 		if (db.isOpen()) {
 			MediaInformation m = new MediaInformation();
 			List<Mp3Info> mp3Infos = m.getMp3Infos(context);
-			Toast.makeText(context,"mp3Infos.size" + mp3Infos.size(),10000).show();
+			// Toast.makeText(context,"mp3Infos.size" +
+			// mp3Infos.size(),10000).show();
 			for (int i = 0; i < mp3Infos.size(); i++) {
 				Mp3Info mp3Info = mp3Infos.get(i);
 				insert(context, mp3Info);
@@ -89,5 +91,20 @@ public class Mp3InfoDao {
 		}
 		db.close();
 		return list;
+	}
+
+	public List<HashMap<String, String>> qurayArtistSongNum(List<String> list) {
+		List<HashMap<String, String>> list_return = new ArrayList<HashMap<String,String>>();
+		SQLiteDatabase db = hepler.getReadableDatabase();
+		for(String artist:list){
+			HashMap<String, String> map = new HashMap<String, String>();
+			Cursor c = db.rawQuery("select * from mp3all where artist = ?", new String[]{artist});
+			int count = c.getCount();
+			String count_str = String.valueOf(count);
+			map.put("artist", artist);
+			map.put("artist_num", count_str);
+			list_return.add(map);
+		}
+		return list_return;
 	}
 }

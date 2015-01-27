@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.example.my3.R;
 import com.example.my3.db.Mp3InfoDao;
-import com.example.my3.dialog.MyProgressDialog;
 
 import android.app.Activity;
 import android.content.Intent;
