@@ -1,5 +1,6 @@
 package com.example.my3.fragment;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.example.my3.R;
@@ -15,6 +16,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,9 +42,16 @@ public class FileFragment extends Fragment {
 
 	void initView() {
 		lv = (ListView) view.findViewById(R.id.file_list);
+		List<HashMap<String, String>> list_sql;
 		Mp3InfoDao dao = new Mp3InfoDao(getActivity());
-		List<String> list = dao.quray("file");
-		FileAdapter fileAdapter = new FileAdapter(list, getActivity());
+		try{
+			list_sql = dao.qurayFileFromSQL();
+		}catch(Exception e){
+			List<String> list = dao.quray("file");
+			list_sql = dao.qurayFileFromSQL();
+		}
+		FileAdapter fileAdapter = new FileAdapter(list_sql, getActivity());
+		Log.i("FileFragment", "list_sql.size  "+list_sql.size());
 		lv.setAdapter(fileAdapter);
 		fileAdapter.notifyDataSetChanged();
 	}

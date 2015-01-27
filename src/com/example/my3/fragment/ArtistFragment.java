@@ -1,5 +1,6 @@
 package com.example.my3.fragment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,9 +37,14 @@ public class ArtistFragment extends Fragment {
 	void initView() {
 		lv = (ListView) view.findViewById(R.id.artist_list);
 		Mp3InfoDao dao = new Mp3InfoDao(getActivity());
-		List<String> list = dao.quray("artist");
-		List<HashMap<String, String>> list1 = dao.qurayArtistSongNum(list);
-		ArtistAdapter artistAdapter = new ArtistAdapter(getActivity(),list1);
+		List<HashMap<String, String>> list_artist = new ArrayList<HashMap<String,String>>();
+		try{
+			list_artist = dao.qurayArtistFromSQL();
+		}catch(Exception e){
+			List<String> list = dao.quray("artist");
+			list_artist = dao.qurayArtistSongNum(list);
+		}
+		ArtistAdapter artistAdapter = new ArtistAdapter(getActivity(),list_artist);
 		lv.setAdapter(artistAdapter);
 		artistAdapter.notifyDataSetChanged();
 	}
